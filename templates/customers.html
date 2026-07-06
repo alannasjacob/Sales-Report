@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Customers</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    margin:40px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid black;
+    padding:10px;
+}
+
+th{
+    background:#007BFF;
+    color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Customer Details</h1>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+
+</tr>
+
+{% for customer in customers %}
+
+<tr>
+
+<td>{{customer[0]}}</td>
+<td>{{customer[1]}}</td>
+<td>{{customer[2]}}</td>
+<td>{{customer[3]}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">⬅ Back to Dashboard</a>
+
+</body>
+
+</html>

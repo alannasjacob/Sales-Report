@@ -1,11 +1,37 @@
 from flask import Flask, render_template
 import sqlite3
+import psycopg2
 import json
 
 app = Flask(__name__)
 
 DATABASE = "mobile_shop.db"
 
+
+@app.route("/customers")
+def customers():
+
+    conn = psycopg2.connect(
+        "postgresql://mobile_shop_user:aYPrHpKOBiISPmSU6QEN8nwY1ljpqIXM@dpg-d95knj0js32c73804bkg-a/mobile_shop"
+    )
+
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT CustomerID,
+               CustomerName,
+               Phone,
+               Email
+        FROM Customers
+        ORDER BY CustomerID;
+    """)
+
+    customers = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("customers.html", customers=customers)
 
 @app.route("/")
 def index():
@@ -32,6 +58,23 @@ def index():
         totals=json.dumps(totals)
     )
 
+@app.route("/customers")
+def customers():
+
+    conn = sqlite3.connect("mobile_shop.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT CustomerName
+        FROM Sales
+    """)
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("customers.html", customers=data)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
