@@ -58,23 +58,6 @@ def index():
         totals=json.dumps(totals)
     )
 
-@app.route("/customers")
-def customers():
-
-    conn = sqlite3.connect("mobile_shop.db")
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        SELECT CustomerName
-        FROM Sales
-    """)
-
-    data = cursor.fetchall()
-
-    conn.close()
-
-    return render_template("customers.html", customers=data)
-
 if __name__ == "__main__":
     app.run(debug=True)
 
