@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 import sqlite3
 import psycopg2
@@ -6,14 +7,13 @@ import json
 app = Flask(__name__)
 
 DATABASE = "mobile_shop.db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 @app.route("/customers")
 def customers():
 
-    conn = psycopg2.connect(
-        "postgresql://mobile_shop_user:aYPrHpKOBiISPmSU6QEN8nwY1ljpqIXM@dpg-d95knj0js32c73804bkg-a/mobile_shop"
-    )
+    conn = psycopg2.connect(DATABASE_URL)
 
     cursor = conn.cursor()
 
